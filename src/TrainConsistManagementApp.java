@@ -1,30 +1,47 @@
-import java.util.regex.*;
+import java.util.*;
+
+class GoodsBogie {
+    String type;
+    String cargo;
+
+    GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
+    }
+
+    public String toString() {
+        return type + " -> " + cargo;
+    }
+}
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("=================================");
-        System.out.println("   UC11 - Validate Train ID & Cargo Code   ");
+        System.out.println("   UC12 - Safety Compliance Check   ");
         System.out.println("=================================");
 
-        String trainId = "TRN-1234";
-        String cargoCode = "PET-AB";
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
-        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
-
-        Matcher trainMatcher = trainPattern.matcher(trainId);
-        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Open", "Coal"));
+        bogies.add(new GoodsBogie("Box", "Grain"));
 
         System.out.println();
-        System.out.println("Train ID: " + trainId);
-        System.out.println("Is Train ID Valid? : " + trainMatcher.matches());
+        System.out.println("Goods Bogies:");
+        for (GoodsBogie b : bogies) {
+            System.out.println(b);
+        }
+
+        boolean isSafe = bogies.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum")
+                );
 
         System.out.println();
-        System.out.println("Cargo Code: " + cargoCode);
-        System.out.println("Is Cargo Code Valid? : " + cargoMatcher.matches());
+        System.out.println("Is Train Safety Compliant? : " + isSafe);
 
         System.out.println();
-        System.out.println("UC11 validation completed...");
+        System.out.println("UC12 safety validation completed...");
     }
 }
