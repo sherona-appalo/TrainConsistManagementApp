@@ -1,42 +1,33 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("=================================");
-        System.out.println("   UC19 - Binary Search Bogie ID   ");
+        System.out.println("   UC20 - Prevent Search on Empty Train   ");
         System.out.println("=================================");
 
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        String searchKey = "BG309";
+        List<String> bogieIds = new ArrayList<>();
 
-        Arrays.sort(bogieIds);
+        String searchKey = "BG101";
 
-        int low = 0;
-        int high = bogieIds.length - 1;
+        if (bogieIds.isEmpty()) {
+            throw new IllegalStateException("Cannot perform search: Train has no bogies");
+        }
+
         boolean found = false;
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
-
-            int result = searchKey.compareTo(bogieIds[mid]);
-
-            if (result == 0) {
+        for (String id : bogieIds) {
+            if (id.equals(searchKey)) {
                 found = true;
                 break;
-            } else if (result > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
 
-        System.out.println();
-        System.out.println("Sorted Bogie IDs: " + Arrays.toString(bogieIds));
         System.out.println("Searching for: " + searchKey);
         System.out.println("Bogie Found? : " + found);
 
         System.out.println();
-        System.out.println("UC19 search completed...");
+        System.out.println("UC20 execution completed...");
     }
 }
