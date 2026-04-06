@@ -1,47 +1,30 @@
-import java.util.*;
-import java.util.stream.*;
-
-class Bogie {
-    String name;
-    int capacity;
-
-    Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    public String toString() {
-        return name + " -> " + capacity;
-    }
-}
+import java.util.regex.*;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("=================================");
-        System.out.println("   UC10 - Count Total Seats in Train   ");
+        System.out.println("   UC11 - Validate Train ID & Cargo Code   ");
         System.out.println("=================================");
 
-        List<Bogie> bogies = new ArrayList<>();
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 20));
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
-        System.out.println();
-        System.out.println("Bogies:");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
-
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+        Matcher trainMatcher = trainPattern.matcher(trainId);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
 
         System.out.println();
-        System.out.println("Total Seating Capacity: " + totalSeats);
+        System.out.println("Train ID: " + trainId);
+        System.out.println("Is Train ID Valid? : " + trainMatcher.matches());
 
         System.out.println();
-        System.out.println("UC10 aggregation completed...");
+        System.out.println("Cargo Code: " + cargoCode);
+        System.out.println("Is Cargo Code Valid? : " + cargoMatcher.matches());
+
+        System.out.println();
+        System.out.println("UC11 validation completed...");
     }
 }
